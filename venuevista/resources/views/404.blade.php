@@ -1,0 +1,14 @@
+@extends('layouts.main')
+
+@section('content')
+<div class="container">
+    <div class="text-center py-5">
+        <h1 class="display-1 text-muted">404</h1>
+        <h2 class="mb-4">Page Not Found</h2>
+        <p class="lead mb-4">The page you are looking for doesn't exist or has been moved.</p>
+        <a href="/" class="btn btn-primary">
+            <i class="fas fa-home"></i> Go Back Home
+        </a>
+    </div>
+</div>
+@endsection

@@ -1,0 +1,31 @@
+
+:root {
+    /* Updated Color Theme - Green */
+    --primary: #1f4d3a;       /* Dark Green */
+    --primary-soft: #2e6b55;  /* Medium Green */
+    --text-primary: #1f4d3a;  /* Green for text (was blue) */
+    --accent: #9fd36c;        /* Light Green */
+    
+    --bg-main: #f7f6f2;
+    --bg-card: #ffffff;
+    --bg-section: #eef1ec;    /* Light green background for sections */
+    
+    --text-heading: #1c2b25;
+    --text-body: #4b5a55;
+    --text-muted: #7b8a84;
+    
+    --border-soft: #e3e6e2;
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    
+    --radius-lg: 28px;
+    --radius-md: 18px;
+    --radius-sm: 12px;
+    --radius-pill: 999px;
+    
+    --transition: all 0.3s ease;
+}
+
+/* Update text-primary class to use green */
+.text-primary { 
+    color: var(--text-primary) !important; /* Now green instead of blue */
+}
