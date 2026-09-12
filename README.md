@@ -1,59 +1,133 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🏛️ VenueVista
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![Laravel](https://img.shields.io/badge/Laravel-12-red.svg)
+![PHP](https://img.shields.io/badge/PHP-8.2%2B-777bb4.svg)
+![Status](https://img.shields.io/badge/Status-Academic%20Project-brightgreen.svg)
 
-## About Laravel
+A full-stack **venue booking platform** built with **Laravel**, allowing users to browse and book event venues while admins manage venue listings and bookings through a dedicated dashboard. Built as a **Web Development** course project.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📋 Overview
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+VenueVista lets registered users discover venues (by capacity, location, amenities, and hourly pricing), book them for a specific date and time slot, and track their bookings. Admins get a separate role-gated dashboard to add/edit/delete venues, manage image galleries, toggle availability, and confirm or cancel bookings.
 
-## Learning Laravel
+## ✨ Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- 🔐 **Role-Based Authentication** — separate `is_admin` / `is_user` middleware gating admin and user areas
+- 🏢 **Venue Management (Admin)** — add, edit, delete venues; manage venue images; toggle availability
+- 📅 **Venue Booking (User)** — browse venues, view details, book a date/time slot, view booking history, cancel bookings
+- ✅ **Booking Workflow** — bookings can be confirmed or cancelled by an admin
+- 🧮 **Computed Attributes** — human-readable booking reference codes (e.g. `BK000123`) and structured operating-hours/main-image accessors on the `Venue` model
+- 🖼️ **Image Uploads** — venues support multiple images with individual delete support
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠️ Tech Stack
 
-## Laravel Sponsors
+| Category | Details |
+|---|---|
+| Framework | Laravel 12 (PHP 8.2+) |
+| Database | SQLite (default, configurable via `.env`) |
+| Templating | Blade |
+| Auth | Custom `AuthController` with role-based middleware (`IsAdmin`, `IsUser`) |
+| Testing | PHPUnit |
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 📁 Project Structure
 
-### Premium Partners
+```
+VenueVista/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Admin/AdminController.php    # Venue & booking management
+│   │   │   ├── User/UserController.php      # Browsing & booking
+│   │   │   ├── AuthController.php           # Login/register/logout
+│   │   │   └── HomeController.php
+│   │   └── Middleware/
+│   │       ├── IsAdmin.php
+│   │       ├── IsUser.php
+│   │       └── ShareViewData.php
+│   └── Models/
+│       ├── User.php
+│       ├── Venue.php
+│       └── Booking.php
+├── database/
+│   ├── migrations/       # users, venues, bookings tables
+│   ├── factories/
+│   └── seeders/
+├── resources/views/
+│   ├── admin/            # dashboard, venues, add/edit-venue, bookings
+│   ├── user/             # dashboard, venues, venue-details, book-venue, my-bookings
+│   ├── auth/             # login, register
+│   └── partials/         # header, footer, admin-header
+├── routes/web.php
+├── config/venuevista.php # admin credential env mapping
+└── README.md
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## ⚙️ Installation
 
-## Contributing
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/<your-username>/VenueVista.git
+   cd VenueVista
+   ```
+2. Install PHP dependencies:
+   ```bash
+   composer install
+   ```
+3. Copy the environment file and generate an app key:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+4. Set up the database (SQLite by default):
+   ```bash
+   touch database/database.sqlite
+   php artisan migrate --seed
+   ```
+5. Serve the application:
+   ```bash
+   php artisan serve
+   ```
+6. Visit `http://localhost:8000`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🗄️ Database Schema
 
-## Code of Conduct
+- **users** — includes a `role` column distinguishing admins from regular users
+- **venues** — name, description, capacity, location, amenities (array), price per hour, images (array), availability flag, operating hours, creator reference
+- **bookings** — linked to a user and a venue, with date, start/end time, total hours, total amount, and status
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🔑 Default Admin Access
 
-## Security Vulnerabilities
+Admin credentials default to `admin@venue.com` / `admin123` (overridable via `ADMIN_EMAIL` / `ADMIN_PASSWORD` in `.env`, see `config/venuevista.php`).
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+> ⚠️ **Security note:** Change these before deploying anywhere beyond local development.
 
-## License
+## 📚 What I Learned
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Implementing role-based access control in Laravel via custom middleware (`IsAdmin`, `IsUser`)
+- Structuring a two-sided (admin/user) application within a single Laravel app using route groups and prefixes
+- Modeling a booking system with derived/computed Eloquent attributes (booking reference codes, operating-hours accessors)
+- Handling image uploads and array-cast JSON columns (`amenities`, `images`) in Eloquent
+- Working with Laravel's migration and seeder system to structure a relational schema
+
+## 🔮 Future Improvements
+
+- Payment gateway integration for booking confirmation
+- Email notifications for booking confirmation/cancellation
+- Search and filtering by location, price range, and capacity
+- Calendar view for venue availability
+
+## 🎓 Course
+
+Web Development — BS Computer Science
+
+## 👩‍💻 Author
+
+**Fatima Nadeem**
+BS Computer Science
+
+## 📎 Notes
+
+- `vendor/`, `.env`, and local database/cache files are excluded from version control (see `.gitignore`)
+- Run `composer install` after cloning to regenerate the `vendor/` directory
